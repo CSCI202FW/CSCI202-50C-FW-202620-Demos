@@ -1,0 +1,20 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/universal:latest",
+	"features": {},
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			"settings": {
+				"workbench.colorTheme": "Dark+", //replace Panda syntax
+				"chat.disableAIFeatures": true,
+				"extensions.ignoreRecommendations": true
+			},
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"ms-vscode.cpptools",
+				"github.vscode-github-actions"
+			]
+		}
+	},
+	"postCreateCommand": "conda install -y -c conda-forge libstdcxx-ng"
+}
