@@ -1,36 +1,45 @@
 #include <iostream>
 #include <string>
 #include <regex>
+#include <format>
+#include "date.h"
 
 int main()
 {
-    std::regex dates{R"(\d{4}\/(?:0?[1-9]|1[0-2])\/(?:[12][1-9]|3[01]|0?[1-9]))"};
-    std::regex thirty{R"(\d{4}\/(?:0?[469]|11)\/(?:[12][1-9]|30|0?[1-9]))"};
-    std::regex feb{R"(\d{4}\/(?:0?2)\/(?:[12][1-9]|0?[1-9]))"};
-    std::regex thirtyone{R"(\d{4}\/(?:0?[13578]|1[02])\/(?:[12][1-9]|3[01]|0?[1-9]))"};
-
-    while (true)
+    std::string input;
+    std::regex dateRegex(R"((\d{4})(\/|-)(0?[1-9]|1[0-2])\2([12][1-9]|3[01]|0?[1-9])\b)");
+    std::regex q(R"(^q)");
+    std::string invalid = "Invalid date!";
+    while (input != "q")
     {
         std::cout << "Enter a date (year/month/day) (q=quit): ";
-        std::string str;
-        if (!getline(std::cin, str) || str == "q")
+        if (!getline(std::cin, input))
         {
-            break;
+            input = "q";
+            continue;
         }
-        if (std::regex_match(str, dates))
+        if (std::regex_search(input, q))
         {
-            if (std::regex_match(str, feb) || std::regex_match(str, thirty) || std::regex_match(str, thirtyone))
-                std::cout << "  Valid date." << std::endl;
-            else
+            input = "q";
+            continue;
+        }
+        std::smatch dateParts;
+        if (std::regex_search(input, dateParts, dateRegex))
+        {
+            try
             {
-                std::cout << "  Invalid Date!" << std::endl;
+                date myDate(stoi(dateParts[3]), stoi(dateParts[4]), stoi(dateParts[1]));
+                std::cout << std::format("Valid Date: Year={}, month={}, day={}", myDate.getYear(), myDate.getMonth(), myDate.getDay()) << std::endl;
+            }
+            catch (...)
+            {
+                std::cout << invalid << std::endl;
             }
         }
         else
         {
-            std::cout << "  Invalid Date!" << std::endl;
+            std::cout << invalid << std::endl;
         }
     }
-
     return 0;
 }
