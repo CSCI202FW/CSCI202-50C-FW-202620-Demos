@@ -1,6 +1,7 @@
 #ifndef LINKED_H
 #define LINKED_H
 #include "node.h"
+#include "linkedListIterator.h"
 #include <iostream>
 #include <string>
 
@@ -18,9 +19,11 @@ public:
     t front() const;
     t back() const;
     void print(std::ostream & = std::cout, std::string = " ") const;
-    /* virtual void insert(const t &newData) = 0;
+    LinkedListIterator<t> begin();
+    LinkedListIterator<t> end();
+    virtual void insert(const t &newData) = 0;
     virtual void deleteNode(const t &deleteItem) = 0;
-    virtual bool search(const t &searchItem) = 0; */
+    virtual bool search(const t &searchItem) = 0;
 
 protected:
     Node<t> *head;
@@ -32,7 +35,7 @@ private:
 };
 
 template <class t>
-inline LinkedList<t>::LinkedList()
+LinkedList<t>::LinkedList()
 {
     this->head = nullptr;
     this->tail = nullptr;
@@ -40,7 +43,7 @@ inline LinkedList<t>::LinkedList()
 }
 
 template <class t>
-inline LinkedList<t>::LinkedList(const LinkedList<t> &listToCopy)
+LinkedList<t>::LinkedList(const LinkedList<t> &listToCopy)
 {
     this->head = nullptr;
     this->tail = nullptr;
@@ -49,7 +52,7 @@ inline LinkedList<t>::LinkedList(const LinkedList<t> &listToCopy)
 }
 
 template <class t>
-inline const LinkedList<t> &LinkedList<t>::operator=(const LinkedList<t> &listToCopy)
+const LinkedList<t> &LinkedList<t>::operator=(const LinkedList<t> &listToCopy)
 {
     if (this != &listToCopy)
     {
@@ -59,13 +62,13 @@ inline const LinkedList<t> &LinkedList<t>::operator=(const LinkedList<t> &listTo
 }
 
 template <class t>
-inline LinkedList<t>::~LinkedList()
+LinkedList<t>::~LinkedList()
 {
     this->destroyList();
 }
 
 template <class t>
-inline void LinkedList<t>::destroyList()
+void LinkedList<t>::destroyList()
 {
     if (!this->isEmptyList())
     {
@@ -82,13 +85,45 @@ inline void LinkedList<t>::destroyList()
 }
 
 template <class t>
-inline bool LinkedList<t>::isEmptyList() const
+bool LinkedList<t>::isEmptyList() const
 {
     return this->head == nullptr || count == 0;
 }
+template <class t>
+int LinkedList<t>::length() const
+{
+    return count;
+}
 
 template <class t>
-inline void LinkedList<t>::copyList(const LinkedList<t> &listToCopy)
+t LinkedList<t>::front() const
+{
+    return head.data;
+}
+
+template <class t>
+t LinkedList<t>::back() const
+{
+    return tail.data;
+}
+
+template <class t>
+void LinkedList<t>::print(std::ostream &out, std::string seperator) const
+{
+    if (!isEmptyList())
+    {
+        Node<t> *current;
+        current = this->head;
+        while (current != nullptr)
+        {
+            out << current.data << seperator;
+            current = current->link;
+        }
+    }
+}
+
+template <class t>
+void LinkedList<t>::copyList(const LinkedList<t> &listToCopy)
 {
     Node<t> *newNode;
     Node<t> *current;
@@ -119,5 +154,17 @@ inline void LinkedList<t>::copyList(const LinkedList<t> &listToCopy)
             current = current->link;
         }
     }
+}
+
+template <class t>
+LinkedListIterator<t> LinkedList<t>::begin()
+{
+    return LinkedListIterator(this->head);
+}
+
+template <class t>
+LinkedListIterator<t> LinkedList<t>::end()
+{
+    return LinkedListIterator();
 }
 #endif
