@@ -116,7 +116,7 @@ void LinkedList<t>::print(std::ostream &out, std::string seperator) const
         current = this->head;
         while (current != nullptr)
         {
-            out << current.data << seperator;
+            out << current->data << seperator;
             current = current->link;
         }
     }
@@ -159,12 +159,12 @@ void LinkedList<t>::copyList(const LinkedList<t> &listToCopy)
 template <class t>
 LinkedListIterator<t> LinkedList<t>::begin()
 {
-    return LinkedListIterator(this->head);
+    return LinkedListIterator<t>(this->head);
 }
 
 template <class t>
 LinkedListIterator<t> LinkedList<t>::end()
 {
-    return LinkedListIterator();
+    return LinkedListIterator<t>();
 }
 #endif

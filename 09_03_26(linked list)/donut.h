@@ -2,11 +2,11 @@
 #define DONUT_H
 #include <string>
 #include <iostream>
-#include <sstream>
 #include <map>
 #include <algorithm>
+#include <stdexcept>
 
-enum class icingType
+enum icingType
 {
     CHOCOLATEICING,
     CARAMELICING,
@@ -17,7 +17,7 @@ enum class icingType
     NOICE
 };
 
-enum drizzleType
+enum class drizzleType
 {
     CARAMELDRIZZLE,
     CHOCOLATEDRIZZLE,
@@ -26,6 +26,7 @@ enum drizzleType
     SPECIALDRIZZLE,
     NODRIZZLE
 };
+
 class Donut
 {
 public:
@@ -48,21 +49,24 @@ public:
         POWDSUGAR,
         NOTOP
     };
+    // donut();
     Donut(std::string icing, std::string topping, std::string drizzle);
     icingType getIcing() const;
-    toppingType getTopping() const;
     drizzleType getDrizzle() const;
-    void setIcing(std::string icing);
-    void setTopping(std::string topping);
-    void setDrizzle(std::string drizzle);
+    toppingType getTopping() const;
+    void setIcing(std::string);
+    void setTopping(std::string);
+    void setDrizzle(std::string);
     std::string toString() const;
     friend std::ostream &operator<<(std::ostream &, const Donut &);
     const static std::map<icingType, std::string> iceToStr;
-    const static std::map<std::string, icingType> strToice;
+    const static std::map<std::string, icingType> strToIce;
     const static std::map<drizzleType, std::string> drizzleToStr;
     const static std::map<std::string, drizzleType> strToDrizzle;
     const static std::map<toppingType, std::string> topToStr;
     const static std::map<std::string, toppingType> strToTop;
+    bool operator==(const Donut &otherDonut);
+    bool operator!=(const Donut &otherDonut);
 
 private:
     icingType icing;
