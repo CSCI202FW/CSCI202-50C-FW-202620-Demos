@@ -1,9 +1,11 @@
-#include "node.h"
+
 #include "donut.h"
+#include "linkedList.h"
 
 int main()
 {
-    Node<Donut> *newNode;
-    newNode = new Node<Donut>(Donut("none", "none", "none"));
+    LinkedList<int> intList;
+    LinkedList<Donut> donut;
+
     return 0;
 }
