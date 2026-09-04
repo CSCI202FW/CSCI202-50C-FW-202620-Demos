@@ -1,5 +1,5 @@
 {
-	"image": "mcr.microsoft.com/devcontainers/universal:latest",
+	"image": "mcr.microsoft.com/devcontainers/cpp:latest",
 	"features": {},
 	"customizations": {
 		// Configure properties specific to VS Code.
