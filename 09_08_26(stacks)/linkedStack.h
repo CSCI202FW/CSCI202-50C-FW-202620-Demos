@@ -9,6 +9,7 @@ class LinkedStack : public StackADT<t>
 public:
     LinkedStack();
     LinkedStack(const LinkedStack<t> &);
+    const LinkedStack<t> &operator=(const LinkedStack<t> &);
     void initializeStack();
     bool isFullStack() const;
     bool isEmptyStack() const;
