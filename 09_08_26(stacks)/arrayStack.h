@@ -26,10 +26,8 @@ private:
     t **list;
 };
 
-#endif
-
 template <class t>
-inline ArrayStack<t>::ArrayStack(int max)
+ArrayStack<t>::ArrayStack(int max)
 {
     if (max <= 0)
     {
@@ -45,7 +43,7 @@ inline ArrayStack<t>::ArrayStack(int max)
 }
 
 template <class t>
-inline ArrayStack<t>::ArrayStack(const ArrayStack<t> &stackToCopy)
+ArrayStack<t>::ArrayStack(const ArrayStack<t> &stackToCopy)
 {
     stackTop = 0;
     list = nullptr;
@@ -54,7 +52,7 @@ inline ArrayStack<t>::ArrayStack(const ArrayStack<t> &stackToCopy)
 }
 
 template <class t>
-inline const ArrayStack<t> &ArrayStack<t>::operator=(const ArrayStack<t> &stackToCopy)
+const ArrayStack<t> &ArrayStack<t>::operator=(const ArrayStack<t> &stackToCopy)
 {
     if (this != &stackToCopy)
     {
@@ -64,7 +62,7 @@ inline const ArrayStack<t> &ArrayStack<t>::operator=(const ArrayStack<t> &stackT
 }
 
 template <class t>
-inline void ArrayStack<t>::initializeStack()
+void ArrayStack<t>::initializeStack()
 {
     if (!isEmptyStack())
     {
@@ -78,19 +76,19 @@ inline void ArrayStack<t>::initializeStack()
 }
 
 template <class t>
-inline bool ArrayStack<t>::isFullStack() const
+bool ArrayStack<t>::isFullStack() const
 {
     return stackTop == maxStackSize;
 }
 
 template <class t>
-inline bool ArrayStack<t>::isEmptyStack() const
+bool ArrayStack<t>::isEmptyStack() const
 {
     return stackTop == 0;
 }
 
 template <class t>
-inline void ArrayStack<t>::push(const t &newItem)
+void ArrayStack<t>::push(const t &newItem)
 {
     if (!isFullStack())
     {
@@ -104,7 +102,7 @@ inline void ArrayStack<t>::push(const t &newItem)
 }
 
 template <class t>
-inline t ArrayStack<t>::peek() const
+t ArrayStack<t>::peek() const
 {
     if (isEmptyStack())
     {
@@ -114,7 +112,7 @@ inline t ArrayStack<t>::peek() const
 }
 
 template <class t>
-inline t &ArrayStack<t>::top()
+t &ArrayStack<t>::top()
 {
     if (isEmptyStack())
     {
@@ -124,7 +122,7 @@ inline t &ArrayStack<t>::top()
 }
 
 template <class t>
-inline t ArrayStack<t>::pop()
+t ArrayStack<t>::pop()
 {
     if (isEmptyStack())
     {
@@ -138,14 +136,14 @@ inline t ArrayStack<t>::pop()
 }
 
 template <class t>
-inline ArrayStack<t>::~ArrayStack()
+ArrayStack<t>::~ArrayStack()
 {
     initializeStack();
     delete[] list;
 }
 
 template <class t>
-inline void ArrayStack<t>::copyStack(const ArrayStack<t> &stackToCopy)
+void ArrayStack<t>::copyStack(const ArrayStack<t> &stackToCopy)
 {
     if (!isEmptyStack())
     {
@@ -163,3 +161,4 @@ inline void ArrayStack<t>::copyStack(const ArrayStack<t> &stackToCopy)
         this->list[i] = new t(*(stackToCopy.list[i]));
     }
 }
+#endif

@@ -2,6 +2,7 @@
 #define LSTACK_H
 #include "stackADT.h"
 #include "node.h"
+#include <stdexcept>
 
 template <class t>
 class LinkedStack : public StackADT<t>
@@ -24,17 +25,16 @@ private:
     Node<t> *stackTop;
     int count;
 };
-#endif
 
 template <class t>
-inline LinkedStack<t>::LinkedStack()
+LinkedStack<t>::LinkedStack()
 {
     stackTop = nullptr;
     count = 0;
 }
 
 template <class t>
-inline LinkedStack<t>::LinkedStack(const LinkedStack<t> &stackToCopy)
+LinkedStack<t>::LinkedStack(const LinkedStack<t> &stackToCopy)
 {
     stackTop = nullptr;
     count = 0;
@@ -42,7 +42,7 @@ inline LinkedStack<t>::LinkedStack(const LinkedStack<t> &stackToCopy)
 }
 
 template <class t>
-inline const LinkedStack<t> &LinkedStack<t>::operator=(const LinkedStack<t> &stackToCopy)
+const LinkedStack<t> &LinkedStack<t>::operator=(const LinkedStack<t> &stackToCopy)
 {
     if (this != &stackToCopy)
     {
@@ -52,7 +52,7 @@ inline const LinkedStack<t> &LinkedStack<t>::operator=(const LinkedStack<t> &sta
 }
 
 template <class t>
-inline void LinkedStack<t>::initializeStack()
+void LinkedStack<t>::initializeStack()
 {
     Node<t> *temp;
     while (stackTop != nullptr)
@@ -65,19 +65,19 @@ inline void LinkedStack<t>::initializeStack()
 }
 
 template <class t>
-inline bool LinkedStack<t>::isFullStack() const
+bool LinkedStack<t>::isFullStack() const
 {
     return false;
 }
 
 template <class t>
-inline bool LinkedStack<t>::isEmptyStack() const
+bool LinkedStack<t>::isEmptyStack() const
 {
     return stackTop == nullptr;
 }
 
 template <class t>
-inline void LinkedStack<t>::push(const t &newItem)
+void LinkedStack<t>::push(const t &newItem)
 {
     Node<t> *newNode;
     newNode = new Node<t>(newItem);
@@ -87,7 +87,7 @@ inline void LinkedStack<t>::push(const t &newItem)
 }
 
 template <class t>
-inline t LinkedStack<t>::peek() const
+t LinkedStack<t>::peek() const
 {
     if (isEmptyStack())
     {
@@ -97,7 +97,7 @@ inline t LinkedStack<t>::peek() const
 }
 
 template <class t>
-inline t &LinkedStack<t>::top()
+t &LinkedStack<t>::top()
 {
     if (isEmptyStack())
     {
@@ -107,7 +107,7 @@ inline t &LinkedStack<t>::top()
 }
 
 template <class t>
-inline t LinkedStack<t>::pop()
+t LinkedStack<t>::pop()
 {
     if (isEmptyStack())
     {
@@ -122,13 +122,13 @@ inline t LinkedStack<t>::pop()
 }
 
 template <class t>
-inline LinkedStack<t>::~LinkedStack()
+LinkedStack<t>::~LinkedStack()
 {
     initializeStack();
 }
 
 template <class t>
-inline void LinkedStack<t>::copyStack(const LinkedStack<t> &stackToCopy)
+void LinkedStack<t>::copyStack(const LinkedStack<t> &stackToCopy)
 {
     Node<t> *newNode;
     Node<t> *current;
@@ -158,3 +158,4 @@ inline void LinkedStack<t>::copyStack(const LinkedStack<t> &stackToCopy)
         this->count = stackToCopy.count;
     }
 }
+#endif
