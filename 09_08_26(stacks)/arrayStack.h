@@ -97,7 +97,7 @@ void ArrayStack<t>::push(const t &newItem)
     }
     else
     {
-        throw std::overflow_error("Stack Overflow. Cannot add to a full stack.")
+        throw std::overflow_error("Stack Overflow. Cannot add to a full stack.");
     }
 }
 
