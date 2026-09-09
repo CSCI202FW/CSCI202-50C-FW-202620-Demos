@@ -6,6 +6,7 @@
 #include <limits>
 #include "arrayStack.h"
 #include "linkedStack.h"
+#include "uLinkedStack.h"
 // m03-a come up with 5 binary numbers
 // 5 hex numbers at least 4 digits
 
@@ -22,11 +23,13 @@ int main()
 {
     ArrayStack<int> aStack;
     LinkedStack<int> lStack;
+    ULinkedStack<int> uStack;
     char numberType = ' ';
     while (numberType != 'Q')
     {
         aStack.initializeStack();
         lStack.initializeStack();
+        uStack.initializeStack();
         std::cout << "Do you want to convert a (H)ex number or a (B)inary number to decimal, or (D)ecimal to binary, enter q to quit? ";
         std::cin >> numberType;
         std::cout << std::endl;
@@ -52,12 +55,52 @@ int main()
             }
             std::cout << binNumber << " converted to decimal is " << convertBinaryToDecimal(aStack) << std::endl;
         }
+        else if (numberType == 'H')
+        {
+            std::string hexNumber = inputHexadecimalNumber();
+
+            for (int i = 0; i < hexNumber.size(); i++)
+            {
+                if (hexDigit.count(hexNumber[i]))
+                {
+                    lStack.push(hexDigit.at(hexNumber[i]));
+                }
+                else
+                {
+                    lStack.push(hexNumber[i] - '0');
+                }
+            }
+            std::cout << hexNumber << " converted to decimal is " << convertHexToDecimal(lStack) << std::endl;
+        }
+        else
+        {
+            int number;
+            std::cout << "Enter a positive number: ";
+            std::cin >> number;
+            while (!std::cin)
+            {
+                resetStream();
+                std::cout << "You entered something that is not a number." << std::endl;
+                std::cout << "Enter a positive number: ";
+                std::cin >> number;
+            }
+            number = abs(number);
+
+            convertDecimalToBinary(uStack, number);
+            std::cout << number << " converted to binary is ";
+            while (!uStack.isEmptyStack())
+            {
+                std::cout << uStack.pop();
+            }
+            std::cout << std::endl;
+        }
     }
+    return 0;
 }
 
 std::string inputBinaryNumber()
 {
-    std::regex binNum(R"([^10])");
+    std::regex binNum(R"([^10]+)");
     std::string binaryNumber;
     std::cout << "Enter a number in binary: ";
     std::getline(std::cin >> std::ws, binaryNumber);
@@ -72,7 +115,66 @@ std::string inputBinaryNumber()
     return binaryNumber;
 }
 
-int convertBinaryToDecimal(StackADT<int> &)
+int convertBinaryToDecimal(StackADT<int> &binNum)
 {
-    return 0;
+    int digit = 0;
+    int position = 0;
+    int converted = 0;
+    while (!binNum.isEmptyStack())
+    {
+        digit = binNum.pop();
+        converted += pow(2, position) * digit;
+        position++;
+    }
+    return converted;
+}
+
+void convertDecimalToBinary(StackADT<int> &result, int number)
+{
+    while (number != 0)
+    {
+        result.push(number % 2);
+        number /= 2; // number = number / 2;
+    }
+}
+
+std::string inputHexadecimalNumber()
+{
+    std::regex hexNum(R"([^\dABCDEFabcdef]+)");
+    std::string hexNumber;
+    std::cout << "Enter a number in hexadecimal: ";
+    std::getline(std::cin >> std::ws, hexNumber);
+    hexNumber = std::regex_replace(hexNumber, space, "");
+    std::transform(hexNumber.begin(), hexNumber.end(), hexNumber.begin(), ::toupper);
+    while (std::regex_search(hexNumber, hexNum))
+    {
+        std::cout << "Please enter only hexadecimal digits (0-9 and a-f)." << std::endl;
+        std::cout << "Enter a number in hexadecimal: ";
+        std::getline(std::cin >> std::ws, hexNumber);
+        hexNumber = std::regex_replace(hexNumber, space, "");
+        std::transform(hexNumber.begin(), hexNumber.end(), hexNumber.begin(), ::toupper);
+    }
+
+    return hexNumber;
+}
+
+int convertHexToDecimal(StackADT<int> &hex)
+{
+    int digit = 0;
+    int position = 0;
+    int converted = 0;
+    while (!hex.isEmptyStack())
+    {
+        digit = hex.pop();
+        converted += pow(16, position) * digit;
+        position++;
+    }
+
+    return converted;
+}
+
+void resetStream()
+{
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }

@@ -18,10 +18,11 @@ public:
 
 private:
     UnorderedLinkedList<t> list;
+    int count;
 };
 
 template <class t>
-ULinkedStack<t>::ULinkedStack() : list(UnorderedLinkedList::directionType::BACKWARD)
+ULinkedStack<t>::ULinkedStack() : list(UnorderedLinkedList<t>::directionType::BACKWARD)
 {
 }
 
@@ -52,20 +53,20 @@ void ULinkedStack<t>::push(const t &newItem)
 template <class t>
 t ULinkedStack<t>::peek() const
 {
-    return list.front;
+    return list.front();
 }
 
 template <class t>
 t &ULinkedStack<t>::top()
 {
-    return list.front();
+    return count;
 }
 
 template <class t>
 t ULinkedStack<t>::pop()
 {
-    t copy = list.front;
-    deleteNode(copy);
+    t copy = list.front();
+    list.deleteNode(copy);
     return copy;
 }
 #endif

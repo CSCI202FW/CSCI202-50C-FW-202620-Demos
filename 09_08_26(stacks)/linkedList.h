@@ -98,7 +98,7 @@ int LinkedList<t>::length() const
 template <class t>
 t LinkedList<t>::front() const
 {
-    return head.data;
+    return head->data;
 }
 
 template <class t>
