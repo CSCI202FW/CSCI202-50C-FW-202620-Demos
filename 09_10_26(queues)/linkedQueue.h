@@ -19,7 +19,7 @@ public:
     void enqueue(const t &queueElement);
     t dequeue();
 
-private:
+protected:
     Node<t> *queueFront;
     Node<t> *queueRear;
     void copyQueue(const LinkedQueue<t> &queueToCopy);

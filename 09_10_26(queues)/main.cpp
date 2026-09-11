@@ -9,6 +9,7 @@
 #include "arrayQueue.h"
 #include "linkedQueue.h"
 #include "unorderedLinkedList.h"
+#include "priorityQueue.h"
 
 void processFile(LinkedQueue<Process> &ready, ArrayQueue<Process> &waiting, int &processCount);
 void listProcesses(const LinkedQueue<Process> &ready, const ArrayQueue<Process> &waiting, const UnorderedLinkedList<Process> &finished);
@@ -22,7 +23,7 @@ void interrupt(LinkedQueue<Process> &ready, ArrayQueue<Process> &waiting);
 int main()
 {
     UnorderedLinkedList<Process> finished;
-    LinkedQueue<Process> ready;
+    PriorityQueue<Process> ready;
     ArrayQueue<Process> waiting;
     int processCount = 0;
     processFile(ready, waiting, processCount);
