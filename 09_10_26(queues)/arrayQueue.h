@@ -73,7 +73,7 @@ void ArrayQueue<t>::copyQueue(const ArrayQueue<t> &queueToCopy)
     }
     queueFront = maxQueueSize - 1;
     queueRear = maxQueueSize - 1;
-    for (int i = (queueToCopy.queueFront + 1) % queueToCopy.maxQueueSize; i != (queueRear + 1) % queueToCopy.maxQueueSize; i = (i + 1) % queueToCopy.maxQueueSize)
+    for (int i = (queueToCopy.queueFront + 1) % queueToCopy.maxQueueSize; i != (queueToCopy.queueRear + 1) % queueToCopy.maxQueueSize; i = (i + 1) % queueToCopy.maxQueueSize)
     {
         enqueue(*(queueToCopy.list[i]));
     }
