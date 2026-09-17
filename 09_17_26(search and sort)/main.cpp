@@ -10,6 +10,8 @@ int main()
 {
     UnorderedLinkedList<int> list;
     UnorderedLinkedList<int> blist;
+    UnorderedLinkedList<int> slist;
+
     std::ifstream in("input.txt");
     int i = 0;
     while (!in.eof())
@@ -19,6 +21,7 @@ int main()
         list.insert(x);
     }
     blist = list;
+    slist = list;
     int searchTerm = 517717;
     int count = 0;
     LinkedListIterator<int> it = seqSearch(list, searchTerm, count);
@@ -30,8 +33,10 @@ int main()
     {
         std::cout << *it << " is in the list on line " << count << std::endl;
     }
-    bubbleSort(blist);
-    std::cout << "Bubble Sort Finished" << std::endl;
+    // bubbleSort(blist);
+    selectionSort(slist);
+    std::cout << "Selection Sort Finished" << std::endl;
+    return 0;
 }
 
 void setup()

@@ -39,12 +39,46 @@ void bubbleSort(UnorderedLinkedList<t> &list)
         }
     }
 }
+// swap used for bubble sort and selection sort
 template <class t>
 void swap(LinkedListIterator<t> &first, LinkedListIterator<t> &second)
 {
     t temp = *first;
     *first = *second;
     *second = temp;
+}
+
+// findsmallest for selection sort
+template <class t>
+LinkedListIterator<t> findSmallest(UnorderedLinkedList<t> &list, LinkedListIterator<t> &begin)
+{
+    t smallest = *begin;
+    LinkedListIterator<t> ret = begin;
+    LinkedListIterator<t> it = begin;
+    for (++it; it != list.end(); ++it)
+    {
+        if (*it < smallest)
+        {
+            smallest = *it;
+            ret = it;
+        }
+    }
+    return ret;
+}
+template <class t>
+void selectionSort(UnorderedLinkedList<t> &list)
+{
+    LinkedListIterator<t> unsort = list.begin();
+    int i = 1;
+    for (unsort; unsort != list.end(); ++unsort)
+    {
+        LinkedListIterator<t> smallest = findSmallest(list, unsort);
+        if (smallest != unsort)
+        {
+            swap(unsort, smallest);
+        }
+        i++;
+    }
 }
 
 #endif

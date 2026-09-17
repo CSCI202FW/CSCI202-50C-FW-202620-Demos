@@ -142,7 +142,7 @@ void LinkedList<t>::copyList(const LinkedList<t> &listToCopy)
         // begin the copy
         current = listToCopy.head;
         this->count = listToCopy.count;
-        this->head = new Node<t>(listToCopy.head);
+        this->head = new Node<t>(listToCopy.head->data);
         this->tail = this->head;
         current = current->link; // advance current to next node in the list to copy
         while (current != nullptr)
