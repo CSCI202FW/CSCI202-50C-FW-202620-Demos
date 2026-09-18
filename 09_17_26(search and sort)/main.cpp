@@ -11,6 +11,7 @@ int main()
     UnorderedLinkedList<int> list;
     UnorderedLinkedList<int> blist;
     UnorderedLinkedList<int> slist;
+    int iList[1000000];
 
     std::ifstream in("input.txt");
     int i = 0;
@@ -19,6 +20,7 @@ int main()
         int x;
         in >> x;
         list.insert(x);
+        iList[i++] = x;
     }
     blist = list;
     slist = list;
@@ -33,9 +35,11 @@ int main()
     {
         std::cout << *it << " is in the list on line " << count << std::endl;
     }
-    // bubbleSort(blist);
-    selectionSort(slist);
-    std::cout << "Selection Sort Finished" << std::endl;
+    std::cout << "Start insertion sort." << std::endl;
+    //  bubbleSort(blist);
+    //  selectionSort(slist);
+    insertionSort(iList, 1000000);
+    std::cout << "Insertion Sort Finished" << std::endl;
     return 0;
 }
 
