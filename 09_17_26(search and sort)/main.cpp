@@ -37,12 +37,13 @@ int main()
     {
         std::cout << *it << " is in the list on line " << count << std::endl;
     }
-    std::cout << "Start quick sort." << std::endl;
+    std::cout << "Start merge sort." << std::endl;
     //  bubbleSort(blist);
     //  selectionSort(slist);
     // insertionSort(iList, 1000000);
-    quickSort(iList, 0, 999999, compareInt);
-    std::cout << "quick Sort Finished" << std::endl;
+    // quickSort(iList, 0, 999999, compareInt);
+    mergeSort(iList, 0, 999999);
+    std::cout << "Merge Sort Finished" << std::endl;
     int comparisons = 0;
     int index = binarySearch(iList, 1000000, searchTerm, comparisons, 0, 999999);
     std::cout << searchTerm << " found at index " << index << " in " << comparisons << " comparisons." << std::endl;
