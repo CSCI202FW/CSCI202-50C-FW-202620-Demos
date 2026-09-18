@@ -22,6 +22,31 @@ LinkedListIterator<t> seqSearch(UnorderedLinkedList<t> &list, const t &item, int
     return itRet;
 }
 
+template <class t>
+int binarySearch(const t list[], int length, const t &item, int &comp, int first, int last)
+{
+    if (last < first)
+    {
+        return -1;
+    }
+    int mid = 0;
+    mid = (first + last) / 2;
+    comp++;
+    if (list[mid] == item)
+    {
+        return mid;
+    }
+    if (list[mid] > item)
+    {
+        return binarySearch(list, length, item, comp, first, mid - 1);
+    }
+    if (list[mid] < item)
+    {
+        return binarySearch(list, length, item, comp, mid + 1, last);
+    }
+    return -1;
+}
+
 //======================== Sort Algorithms ===========================
 
 template <class t>
@@ -94,6 +119,39 @@ void insertionSort(t list[], int length)
             location--;
         }
         list[location] = temp;
+    }
+}
+
+template <class t>
+int partition(t list[], int low, int high, int (*comp)(t &, t &))
+{
+    t pivot = list[high];
+    int i = low - 1;
+    for (int j = low; j <= high - 1; j++)
+    {
+        t item = list[j];
+        if (comp(item, pivot) < 0)
+        {
+            i++;
+            list[j] = list[i];
+            list[i] = item;
+        }
+    }
+    i++;
+    t temp = list[i];
+    list[i] = list[high];
+    list[high] = temp;
+    return i;
+}
+
+template <class t>
+void quickSort(t list[], int low, int high, int (*comp)(t &, t &))
+{
+    if (low < high)
+    {
+        int pi = partition(list, low, high, comp);
+        quickSort(list, low, pi - 1, comp);
+        quickSort(list, pi + 1, high, comp);
     }
 }
 

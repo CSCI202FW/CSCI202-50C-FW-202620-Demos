@@ -6,6 +6,8 @@
 #include "unorderedLinkedList.h"
 #include "searchSort.h"
 
+int compareInt(int &first, int &second);
+
 int main()
 {
     UnorderedLinkedList<int> list;
@@ -35,11 +37,15 @@ int main()
     {
         std::cout << *it << " is in the list on line " << count << std::endl;
     }
-    std::cout << "Start insertion sort." << std::endl;
+    std::cout << "Start quick sort." << std::endl;
     //  bubbleSort(blist);
     //  selectionSort(slist);
-    insertionSort(iList, 1000000);
-    std::cout << "Insertion Sort Finished" << std::endl;
+    // insertionSort(iList, 1000000);
+    quickSort(iList, 0, 999999, compareInt);
+    std::cout << "quick Sort Finished" << std::endl;
+    int comparisons = 0;
+    int index = binarySearch(iList, 1000000, searchTerm, comparisons, 0, 999999);
+    std::cout << searchTerm << " found at index " << index << " in " << comparisons << " comparisons." << std::endl;
     return 0;
 }
 
@@ -59,4 +65,21 @@ void setup()
     {
         out << *it << std::endl;
     }
+}
+
+int compareInt(int &first, int &second)
+{
+    if (first < second)
+    {
+        return -1;
+    }
+    else if (first == second)
+    {
+        return 0;
+    }
+    else // first > second
+    {
+        return 1;
+    }
+    return 0;
 }
