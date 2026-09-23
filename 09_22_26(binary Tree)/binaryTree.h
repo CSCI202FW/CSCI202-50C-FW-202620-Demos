@@ -24,7 +24,7 @@ public:
     virtual void deleteNode(const t &deleteItem) = 0;
 
 protected:
-    BinaryNode *root;
+    BinaryNode<t> *root;
 
 private:
     void copyTree(BinaryNode<t> *&myTreeNode, BinaryNode<t> *treeToCopyNode);
