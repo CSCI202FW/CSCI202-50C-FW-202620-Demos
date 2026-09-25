@@ -1,6 +1,6 @@
 #ifndef AVLTREE_H
 #define AVLTREE_H
-
+#include "linkedStack.h"
 #include "binarySearchTree.h"
 #include <sstream>
 #include <iostream>
@@ -10,14 +10,36 @@ class AVLTree : public BinarySearchTree<t>
 {
 public:
     AVLTree(int (*comp)(const t &, const t &) = cmp);
+    class Iterator
+    {
+    public:
+        Iterator(BinaryNode<t> *currentNode = nullptr, bool pushSmaller = true);
+        bool hasNext();
+        Iterator operator++();
+        t &operator*();
+        bool operator==(const Iterator &other) const;
+        bool operator!=(const Iterator &other) const;
+
+    private:
+        LinkedStack<BinaryNode<t> *> nodeStack;
+        void pushLeftNodes(BinaryNode<t> *node, bool isSmaller);
+    };
     void insert(const t &insertItem);
+    Iterator insertAVL(const t &insertItem);
+    Iterator begin() { return Iterator(this->root); };
+    Iterator end() { return Iterator(); };
+    Iterator find(const t &searchItem) const;
+    bool isBalanced();
 
 private:
-    void insertIntoAVL(BinaryNode<t> *&currentNode, BinaryNode<t> *newNode, bool &isTaller);
+    void insertIntoAVL(BinaryNode<t> *&currentNode, BinaryNode<t> *newNode, bool &isTaller, Iterator &it);
     void balanceFromLeft(BinaryNode<t> *&currentNode);
     void balanceFromRight(BinaryNode<t> *&currentNode);
     void rotateToLeft(BinaryNode<t> *&currentNode);
     void rotateToRight(BinaryNode<t> *&currentNode);
+    Iterator find(const t &searchItem, BinaryNode<t> *currentNode) const;
+    int calculateBalance(BinaryNode<t> *currentNode);
+    bool isBalanced(BinaryNode<t> *currentNode);
 };
 
 #endif
@@ -30,18 +52,40 @@ inline AVLTree<t>::AVLTree(int (*comp)(const t &, const t &)) : BinarySearchTree
 template <class t>
 inline void AVLTree<t>::insert(const t &insertItem)
 {
-    BinaryNode<t> *newNode = new BinaryNode(insertItem);
-    bool isTaller = false;
-    insertIntoAVL(this->root, newNode, isTaller);
+    insertAVL(insertItem);
 }
 
 template <class t>
-inline void AVLTree<t>::insertIntoAVL(BinaryNode<t> *&currentNode, BinaryNode<t> *newNode, bool &isTaller)
+inline AVLTree<t>::Iterator AVLTree<t>::insertAVL(const t &insertItem)
+{
+    BinaryNode<t> *newNode = new BinaryNode(insertItem);
+    bool isTaller = false;
+    Iterator it;
+    insertIntoAVL(this->root, newNode, isTaller, it);
+    return it;
+}
+
+template <class t>
+inline AVLTree<t>::Iterator AVLTree<t>::find(const t &searchItem) const
+{
+
+    return find(searchItem, this->root);
+}
+
+template <class t>
+inline bool AVLTree<t>::isBalanced()
+{
+    return isBalanced(this->root);
+}
+
+template <class t>
+inline void AVLTree<t>::insertIntoAVL(BinaryNode<t> *&currentNode, BinaryNode<t> *newNode, bool &isTaller, Iterator &it)
 {
     if (currentNode == nullptr)
     {
         currentNode = newNode;
         isTaller = true;
+        it = Iterator(currentNode, false);
     }
     else
     {
@@ -136,6 +180,58 @@ inline void AVLTree<t>::balanceFromLeft(BinaryNode<t> *&currentNode)
 }
 
 template <class t>
+inline void AVLTree<t>::balanceFromRight(BinaryNode<t> *&currentNode)
+{
+    BinaryNode<t> *rChild;
+    BinaryNode<t> *rChild_lChild;
+    rChild = currentNode->rLink;
+    switch (rChild->bfactor)
+    {
+    case 0:
+    case 1:
+        currentNode->bfactor = 0;
+        rChild->bfactor = 0;
+        rotateToLeft(currentNode);
+        break;
+    case -1:
+        rChild_lChild = rChild->lLink;
+        switch (rChild_lChild->bfactor)
+        {
+        case -1:
+            currentNode->bfactor = 0;
+            rChild->bfactor = 1;
+            break;
+        case 0:
+            currentNode->bfactor = 0;
+            rChild->bfactor = 0;
+            break;
+        case 1:
+            currentNode->bfactor = -1;
+            rChild->bfactor = 0;
+            break;
+        }
+        rChild_lChild->bfactor = 0;
+        rotateToRight(currentNode->rLink);
+        rotateToLeft(currentNode);
+        break;
+    }
+}
+
+template <class t>
+inline void AVLTree<t>::rotateToLeft(BinaryNode<t> *&currentNode)
+{
+    BinaryNode<t> *newRootNode;
+    if (currentNode == nullptr || currentNode->rLink == nullptr)
+    {
+        throw std::out_of_range("Cannot rotate empty node.");
+    }
+    newRootNode = currentNode->rLink;
+    currentNode->rLink = newRootNode->lLink;
+    newRootNode->lLink = currentNode;
+    currentNode = newRootNode;
+}
+
+template <class t>
 inline void AVLTree<t>::rotateToRight(BinaryNode<t> *&currentNode)
 {
     BinaryNode<t> *newRootNode;
@@ -147,4 +243,126 @@ inline void AVLTree<t>::rotateToRight(BinaryNode<t> *&currentNode)
     currentNode->lLink = newRootNode->rLink;
     newRootNode->rLink = currentNode;
     currentNode = newRootNode;
+}
+
+template <class t>
+inline AVLTree<t>::Iterator AVLTree<t>::find(const t &searchItem, BinaryNode<t> *currentNode) const
+{
+
+    if (currentNode == nullptr)
+    {
+        return AVLTree<t>::Iterator(); // empty iterator because we didn't find it
+    }
+    int compareValue = this->compare(searchItem, currentNode->data);
+    if (compareValue == 0)
+    {
+        return AVLTree<t>::Iterator(currentNode, false);
+    }
+    else if (compareValue == 1)
+    {
+        return find(searchItem, currentNode->rLink);
+    }
+    else
+    {
+        return find(searchItem, currentNode->lLink);
+    }
+}
+
+template <class t>
+inline int AVLTree<t>::calculateBalance(BinaryNode<t> *currentNode)
+{
+    if (currentNode == nullptr)
+        return 0;
+    calculateBalance(currentNode->lLink);
+    calculateBalance(currentNode->rLink);
+    currentNode->bfactor = this->height(currentNode->rLink) - this->height(currentNode->lLink);
+    return currentNode->bfactor;
+}
+
+template <class t>
+inline bool AVLTree<t>::isBalanced(BinaryNode<t> *currentNode)
+{
+    if (currentNode == nullptr)
+    {
+        return true;
+    }
+    bool balance = !(currentNode->bfactor > 1 || currentNode->bfactor < -1);
+    return balance && isBalanced(currentNode->lLink) && isBalanced(currentNode->rLink);
+}
+
+template <class t>
+inline AVLTree<t>::Iterator::Iterator(BinaryNode<t> *currentNode, bool pushSmaller)
+{
+    pushLeftNodes(currentNode, pushSmaller);
+}
+
+template <class t>
+inline bool AVLTree<t>::Iterator::hasNext()
+{
+    return !nodeStack.isEmptyStack();
+}
+
+template <class t>
+inline AVLTree<t>::Iterator AVLTree<t>::Iterator::operator++()
+{
+    if (hasNext())
+    {
+        BinaryNode<t> *node = nodeStack.pop();
+        if (node->rLink != nullptr)
+        {
+            pushLeftNodes(node->rLink, true);
+        }
+    }
+    return *this;
+}
+
+template <class t>
+inline t &AVLTree<t>::Iterator::operator*()
+{
+    if (!hasNext())
+    {
+        throw std::out_of_range("No more elements.");
+    }
+    BinaryNode<t> *node = nodeStack.top();
+    return node->data;
+}
+
+template <class t>
+inline bool AVLTree<t>::Iterator::operator==(const Iterator &other) const
+{
+    if (nodeStack.isEmptyStack() && other.nodeStack.isEmptyStack()) // if both are empty
+    {
+        return true;
+    }
+    else if (nodeStack.isEmptyStack() || other.nodeStack.isEmptyStack()) // if one is empty but not both (else)
+    {
+        return false;
+    }
+    BinaryNode<t> *myNode = nodeStack.top();
+    BinaryNode<t> *theirNode = other.nodeStack.top();
+    return &myNode == &theirNode; // comparing pointer addresses
+}
+
+template <class t>
+inline bool AVLTree<t>::Iterator::operator!=(const Iterator &other) const
+{
+    return !(this == other);
+}
+
+template <class t>
+inline void AVLTree<t>::Iterator::pushLeftNodes(BinaryNode<t> *node, bool pushSmaller)
+{
+    if (node != nullptr)
+    {
+        nodeStack.push(node);
+        node = node->lLink;
+    }
+    if (pushSmaller) // layer smaller nodes on top
+    {
+        while (node != nullptr)
+        {
+            nodeStack.push(node);
+            node = node->lLink;
+        }
+    }
 }
