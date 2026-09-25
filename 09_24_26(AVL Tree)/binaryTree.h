@@ -25,6 +25,7 @@ public:
 
 protected:
     BinaryNode<t> *root;
+    int height(BinaryNode<t> *currentNode) const;
 
 private:
     void copyTree(BinaryNode<t> *&myTreeNode, BinaryNode<t> *treeToCopyNode);
@@ -33,7 +34,7 @@ private:
     void preorder(BinaryNode<t> *currentNode, std::ostringstream &out) const;
     void postorder(BinaryNode<t> *currentNode, std::ostringstream &out) const;
     int nodeCount(BinaryNode<t> *currentNode) const;
-    int height(BinaryNode<t> *currentNode) const;
+
     int leavesCount(BinaryNode<t> *currentNode) const;
     int max(int x, int y) const;
 };
