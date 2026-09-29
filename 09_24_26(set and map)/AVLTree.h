@@ -20,6 +20,7 @@ public:
         t &operator*();
         bool operator==(const Iterator &other) const;
         bool operator!=(const Iterator &other) const;
+        t *operator->();
 
     private:
         LinkedStack<BinaryNode<t> *> nodeStack;
@@ -451,5 +452,16 @@ void AVLTree<t>::Iterator::pushLeftNodes(BinaryNode<t> *node, bool pushSmaller)
             node = node->lLink;
         }
     }
+}
+
+template <class t>
+t *AVLTree<t>::Iterator::operator->()
+{
+    if (nodeStack.isEmptyStack())
+    {
+        throw std::out_of_range("No more elements");
+    }
+    BinaryNode<t> *node = nodeStack.top();
+    return &(node->data);
 }
 #endif
