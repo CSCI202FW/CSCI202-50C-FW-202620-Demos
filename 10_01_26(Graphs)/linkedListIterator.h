@@ -9,7 +9,7 @@ class LinkedListIterator
 public:
     LinkedListIterator();
     LinkedListIterator(Node<t> *);
-    t &operator*();
+    t operator*();
     LinkedListIterator<t> operator++();
     bool operator==(const LinkedListIterator<t> &) const;
     bool operator!=(const LinkedListIterator<t> &) const;
@@ -31,7 +31,7 @@ LinkedListIterator<t>::LinkedListIterator(Node<t> *n)
 }
 
 template <class t>
-t &LinkedListIterator<t>::operator*()
+t LinkedListIterator<t>::operator*()
 {
     if (current == nullptr)
         throw std::out_of_range("Cannot retrieve data from empty node.");

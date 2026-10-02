@@ -1,6 +1,16 @@
 {
 	"image": "mcr.microsoft.com/devcontainers/cpp:latest",
-	"features": {},
+	"features": {
+		"ghcr.io/devcontainers/features/desktop-lite": "latest"
+	},
+	"forwardPorts": [
+		6080
+	],
+	"portsAttributes": {
+		"6080": {
+			"label": "desktop"
+		}
+	},
 	"customizations": {
 		// Configure properties specific to VS Code.
 		"vscode": {

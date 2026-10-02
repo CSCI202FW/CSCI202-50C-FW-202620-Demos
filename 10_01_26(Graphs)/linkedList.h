@@ -19,8 +19,8 @@ public:
     t front() const;
     t back() const;
     void print(std::ostream & = std::cout, std::string = " ") const;
-    LinkedListIterator<t> begin();
-    LinkedListIterator<t> end();
+    LinkedListIterator<t> begin() const;
+    LinkedListIterator<t> end() const;
     virtual void insert(const t &newData) = 0;
     virtual void deleteNode(const t &deleteItem) = 0;
     virtual bool search(const t &searchItem) = 0;
@@ -157,13 +157,13 @@ void LinkedList<t>::copyList(const LinkedList<t> &listToCopy)
 }
 
 template <class t>
-LinkedListIterator<t> LinkedList<t>::begin()
+LinkedListIterator<t> LinkedList<t>::begin() const
 {
     return LinkedListIterator<t>(this->head);
 }
 
 template <class t>
-LinkedListIterator<t> LinkedList<t>::end()
+LinkedListIterator<t> LinkedList<t>::end() const
 {
     return LinkedListIterator<t>();
 }
