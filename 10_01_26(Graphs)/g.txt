@@ -1,4 +1,4 @@
-diagraph {
+digraph {
 0->1;
 0->3;
 1->4;
