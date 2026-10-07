@@ -29,7 +29,7 @@ int main()
     decisionTree.insert(Pair<GameState, Action>(gs3, Action(healParty)));
     int a;
     std::random_device rd;
-    std::uniform_real_distribution percent;
+    std::uniform_real_distribution percent(0.0, 0.3);
     std::default_random_engine generator(rd());
     while (true)
     {
