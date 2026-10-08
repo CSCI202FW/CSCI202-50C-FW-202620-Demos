@@ -1,0 +1,19 @@
+Uniform values 5000 size hash table modulus
+There were 1819 collisions.
+There were 3181 items inserted.
+-------------------------------------------------------
+Clustered values 5000 size hash table modulus
+There were 4000 collisions.
+There were 1000 items inserted.
+-------------------------------------------------------
+Uniform values 10000 size hash table modulus
+There were 1037 collisions.
+There were 3963 items inserted.
+-------------------------------------------------------
+Clustered values 10000 size hash table modulus
+There were 4000 collisions.
+There were 1000 items inserted.
+-------------------------------------------------------
+Clustered values 10007 size hash table modulus
+There were 3539 collisions.
+There were 1461 items inserted.
