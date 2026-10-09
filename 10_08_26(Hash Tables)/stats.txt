@@ -105,3 +105,51 @@ There were 1261 collisions.
 There were 5000 items inserted.
 There were 1949 linear probes done.
 There were 1.5456 average probes per collision.
+-------------------------------------------------------
+Clustered values 10007 size hash table modulus with quadratic probing
+There were 4158 collisions.
+There were 5000 items inserted.
+There were 67893 linear probes done.
+There were 16.3283 average probes per collision.
+-------------------------------------------------------
+Uniform values 10007 size hash table modulus with quadratic probing
+There were 1264 collisions.
+There were 5000 items inserted.
+There were 2199 linear probes done.
+There were 1.73972 average probes per collision.
+-------------------------------------------------------
+Clustered values 10007 size hash table mid-square with quadratic probing
+There were 1316 collisions.
+There were 5000 items inserted.
+There were 2395 linear probes done.
+There were 1.81991 average probes per collision.
+-------------------------------------------------------
+Uniform value 10007 size hash table mid-square with quadratic probing
+There were 1203 collisions.
+There were 5000 items inserted.
+There were 2085 linear probes done.
+There were 1.73317 average probes per collision.
+-------------------------------------------------------
+Uniform values 10007 size hash table mulitplication with quadratic probing
+There were 1263 collisions.
+There were 5000 items inserted.
+There were 2086 linear probes done.
+There were 1.65162 average probes per collision.
+-------------------------------------------------------
+Clustered values 10007 size hash table mulitplication with quadratic probing
+There were 932 collisions.
+There were 5000 items inserted.
+There were 1222 linear probes done.
+There were 1.31116 average probes per collision.
+-------------------------------------------------------
+Uniform values 10007 size hash table mulitplication with double hashing
+There were 1249 collisions.
+There were 5000 items inserted.
+There were 1892 linear probes done.
+There were 1.51481 average probes per collision.
+-------------------------------------------------------
+Clustered values 10007 size hash table mulitplication with double hashing
+There were 1002 collisions.
+There were 5000 items inserted.
+There were 1584 linear probes done.
+There were 1.58084 average probes per collision.

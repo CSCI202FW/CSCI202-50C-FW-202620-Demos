@@ -15,6 +15,7 @@ int hash(int key);
 int hashing_midsquare(long key, int size);
 int folding(int key, int segments);
 int hashing_multiplication(int key);
+int doubleHash(int key);
 
 // M07 part b lab implement Universal Hashing #6 from https://www.geeksforgeeks.org/dsa/hash-functions-and-list-types-of-hash-functions/
 // rerun both experiments
@@ -73,7 +74,7 @@ int main()
                 } */
                 else
                 {
-                    hashValue = (hashValue + i) % HT_SIZE;
+                    hashValue = (hashValue + i * i * doubleHash(num)) % HT_SIZE;
                     probeCount++;
                     pCount++;
                     i++;
@@ -146,9 +147,9 @@ void setup()
 
 int hash(int key)
 {
-    // return hashing_multiplication(key);
+    return hashing_multiplication(key);
     // return folding(key, 2);
-    // return hashing_midsquare(key, 5);
+    return hashing_midsquare(key, 5);
     return key % HT_SIZE;
 }
 
@@ -194,4 +195,9 @@ int hashing_multiplication(int key)
     hash = HT_SIZE * fraction;
     hash = floor(hash);
     return static_cast<int>(hash);
+}
+
+int doubleHash(int key)
+{
+    return 1 + (key % (HT_SIZE - 2));
 }
