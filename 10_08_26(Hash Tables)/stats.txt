@@ -17,3 +17,79 @@ There were 1000 items inserted.
 Clustered values 10007 size hash table modulus
 There were 3539 collisions.
 There were 1461 items inserted.
+-------------------------------------------------------
+Uniform values 10007 size hash table modulus
+There were 1075 collisions.
+There were 3925 items inserted.
+-------------------------------------------------------
+Uniform value 10007 size hash table mid-square
+There were 1049 collisions.
+There were 3951 items inserted.
+-------------------------------------------------------
+Clustered values 10007 size hash table mid-square
+There were 1121 collisions.
+There were 3879 items inserted.
+-------------------------------------------------------
+Uniform values 10007 size hash table folding
+There were 4737 collisions.
+There were 263 items inserted.
+-------------------------------------------------------
+Clustered values 10007 size hash table folding
+There were 4812 collisions.
+There were 188 items inserted.
+-------------------------------------------------------
+Clustered values 10007 size hash table mulitplication
+There were 826 collisions.
+There were 4174 items inserted.
+-------------------------------------------------------
+Uniform values 10007 size hash table mulitplication
+There were 1064 collisions.
+There were 3936 items inserted.
+-------------------------------------------------------
+Uniform values 10007 size hash table mulitplication with linear probing
+There were 1263 collisions.
+There were 5000 items inserted.
+There were 2150 linear probes done.
+There were 1.7023 average probes per collision.
+-------------------------------------------------------
+Clustered values 10007 size hash table mulitplication with linear probing
+There were 938 collisions.
+There were 5000 items inserted.
+There were 1272 linear probes done.
+There were 1.35608 average probes per collision.
+-------------------------------------------------------
+Clustered values 10007 size hash table folding with linear probing
+There were 4150 collisions.
+There were 5000 items inserted.
+There were 233700 linear probes done.
+There were 56.3133 average probes per collision.
+-------------------------------------------------------
+Uniform values 10007 size hash table folding with linear probing
+There were 4172 collisions.
+There were 5000 items inserted.
+There were 233329 linear probes done.
+There were 55.9274 average probes per collision.
+-------------------------------------------------------
+Clustered values 10007 size hash table mid-square with linear probing
+There were 1333 collisions.
+There were 5000 items inserted.
+There were 2538 linear probes done.
+There were 1.90398 average probes per collision.
+-------------------------------------------------------
+Uniform value 10007 size hash table mid-square with linear probing
+There were 1222 collisions.
+There were 5000 items inserted.
+There were 2123 linear probes done.
+There were 1.73732 average probes per collision.
+-------------------------------------------------------
+Clustered values 10007 size hash table modulus with linear probing
+There were 4200 collisions.
+There were 5000 items inserted.
+There were 243686 linear probes done.
+There were 58.0205 average probes per collision.
+-------------------------------------------------------
+Uniform values 10007 size hash table modulus with linear probing
+There were 1271 collisions.
+There were 5000 items inserted.
+There were 2201 linear probes done.
+There were 1.73171 average probes per collision.

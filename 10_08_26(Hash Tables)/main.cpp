@@ -13,6 +13,8 @@ const int HT_SIZE = 10007;
 void setup();
 int hash(int key);
 int hashing_midsquare(long key, int size);
+int folding(int key, int segments);
+int hashing_multiplication(int key);
 
 int main()
 {
@@ -21,11 +23,13 @@ int main()
     int ht[HT_SIZE] = {0};
     int collisions = 0;
     int count = 0;
+    unsigned long probeCount = 0;
     while (!in.eof())
     {
         int num;
         in >> num;
         int hashValue = hash(num);
+
         if (ht[hashValue] == 0)
         {
             ht[hashValue] = num;
@@ -36,10 +40,40 @@ int main()
         {
             std::cout << num << " collided with " << ht[hashValue] << std::endl;
             collisions++;
+            bool found = false;
+            int pCount = 0;
+            int i = 1;
+            while (ht[hashValue] != 0 && !found)
+            {
+                if (ht[hashValue] == num)
+                {
+                    found = true;
+                }
+                else
+                {
+                    hashValue = (hashValue + i) % HT_SIZE;
+                    probeCount++;
+                    pCount++;
+                    i++;
+                }
+            }
+            if (found)
+            {
+                collisions--;
+                probeCount -= pCount;
+                std::cout << "Duplicates are not allowed" << std::endl;
+            }
+            else
+            {
+                ht[hashValue] = num;
+                count++;
+            }
         }
     }
     std::cout << "There were " << collisions << " collisions." << std::endl;
     std::cout << "There were " << count << " items inserted." << std::endl;
+    std::cout << "There were " << probeCount << " linear probes done." << std::endl;
+    std::cout << "There were " << static_cast<double>(probeCount) / collisions << " average probes per collision." << std::endl;
 
     Person **people = new Person *[13];
     Person james("james", 28);
@@ -67,8 +101,8 @@ void setup()
     while (randomData.size() < 5000)
     {
         int num = 0;
-        num = distribution2(generator) * 100000 + distribution(generator);
-        // num = distribution3(generator);
+        // num = distribution2(generator) * 100000 + distribution(generator);
+        num = distribution3(generator);
         randomData.insert(num);
     }
     bool begin = true;
@@ -90,5 +124,52 @@ void setup()
 
 int hash(int key)
 {
+    // return hashing_multiplication(key);
+    // return folding(key, 2);
+    // return hashing_midsquare(key, 5);
     return key % HT_SIZE;
+}
+
+int hashing_midsquare(long key, int size)
+{
+    int squareLen = 0;
+    int mid_pos = 0;
+    unsigned long keysquare = key * key;
+    std::string squaredStr = std::to_string(keysquare);
+    squareLen = squaredStr.length();
+    if (squareLen < size)
+    {
+        squaredStr = std::string(size - squareLen, '0') + squaredStr;
+        squareLen = size;
+    }
+    mid_pos = (squareLen - size) / 2;
+
+    std::string midDigits = squaredStr.substr(mid_pos, size);
+    return std::stoi(midDigits) % HT_SIZE;
+}
+
+int folding(int key, int segments)
+{
+    std::string keyStr = std::to_string(key);
+    int segLen = keyStr.length() / segments;
+    int fold = 0;
+    int i = 0;
+    while (i < keyStr.length())
+    {
+        fold += stoi(keyStr.substr(i, segLen));
+        i = i + segLen;
+    }
+    return fold % HT_SIZE;
+}
+
+int hashing_multiplication(int key)
+{
+    std::default_random_engine generator;
+    std::uniform_real_distribution<double> distribution(0, 1);
+    static double A = distribution(generator);
+    double hash;
+    double fraction = std::modf(key * A, &hash);
+    hash = HT_SIZE * fraction;
+    hash = floor(hash);
+    return static_cast<int>(hash);
 }
