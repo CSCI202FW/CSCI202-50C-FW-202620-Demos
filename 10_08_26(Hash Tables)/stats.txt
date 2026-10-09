@@ -93,3 +93,15 @@ There were 1271 collisions.
 There were 5000 items inserted.
 There were 2201 linear probes done.
 There were 1.73171 average probes per collision.
+-------------------------------------------------------
+Clustered values 10007 size hash table Rehashing
+There were 984 collisions.
+There were 5000 items inserted.
+There were 1570 linear probes done.
+There were 1.59553 average probes per collision.
+-------------------------------------------------------
+Uniform values 10007 size hash table Rehashing
+There were 1261 collisions.
+There were 5000 items inserted.
+There were 1949 linear probes done.
+There were 1.5456 average probes per collision.

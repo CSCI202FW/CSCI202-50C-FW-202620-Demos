@@ -28,7 +28,7 @@ int main()
     {
         int num;
         in >> num;
-        int hashValue = hash(num);
+        int hashValue = hashing_multiplication(num);
 
         if (ht[hashValue] == 0)
         {
@@ -48,6 +48,24 @@ int main()
                 if (ht[hashValue] == num)
                 {
                     found = true;
+                }
+                else if (pCount == 0)
+                {
+                    hashValue = hashing_midsquare(num, 6);
+                    probeCount++;
+                    pCount++;
+                }
+                else if (pCount == 1)
+                {
+                    hashValue = hash(num);
+                    probeCount++;
+                    pCount++;
+                }
+                else if (pCount == 2)
+                {
+                    hashValue = folding(num, 2);
+                    probeCount++;
+                    pCount++;
                 }
                 else
                 {
@@ -101,8 +119,8 @@ void setup()
     while (randomData.size() < 5000)
     {
         int num = 0;
-        // num = distribution2(generator) * 100000 + distribution(generator);
-        num = distribution3(generator);
+        num = distribution2(generator) * 100000 + distribution(generator);
+        // num = distribution3(generator);
         randomData.insert(num);
     }
     bool begin = true;
